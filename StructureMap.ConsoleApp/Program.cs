@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Credit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,15 @@ namespace StructureMap.ConsoleApp
     {
         static void Main(string[] args)
         {
+            var container = new Container();
+            //var container = new Container(MasterCardAction());
+            container.Configure(MasterCardAction());
+            container.Configure(x => x.For<ICreditCard>().Use<Visa>().Named("visa"));
+        }
+
+        private static Action<ConfigurationExpression> MasterCardAction()
+        {
+            return x => x.For<ICreditCard>().Use<MasterCard>();
         }
     }
 }
