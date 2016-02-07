@@ -11,10 +11,16 @@ namespace StructureMap.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var container = new Container();
-            //var container = new Container(MasterCardAction());
-            container.Configure(MasterCardAction());
-            container.Configure(x => x.For<ICreditCard>().Use<Visa>().Named("visa"));
+            //var container = new Container();
+            var container = new Container(MasterCardAction());
+            //container.Configure(MasterCardAction());
+            //container.Configure(x => x.For<ICreditCard>().Use<Visa>().Named("visa"));
+
+            var shopper = container.GetInstance<Shopper>();
+
+            Console.WriteLine(shopper.Charge());
+
+            Console.Read();
         }
 
         private static Action<ConfigurationExpression> MasterCardAction()
